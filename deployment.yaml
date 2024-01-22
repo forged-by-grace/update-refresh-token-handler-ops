@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: update-refresh-token
+  labels:
+    app: update-refresh-token-app
+  namespace: token-handler
+spec:
+  selector:
+    matchLabels:
+      app: update-refresh-token-app
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: update-refresh-token-app
+    spec:
+      containers:
+      - name: update-refresh-token-app
+        image: conano/update-refresh-token-handler:latest        
+        envFrom:
+        - secretRef:
+            name: update-refresh-token-secret
+        imagePullPolicy: IfNotPresent        
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        
