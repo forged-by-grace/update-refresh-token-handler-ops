@@ -36,7 +36,7 @@ pipeline {
                    git commit -m "Updated Deployment Manifest"
                 """
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                  sh "git push https://github.com/forged-by-grace/detect-reused-refresh-token-handler-ops.git main"
+                  sh "git push https://github.com/forged-by-grace/${APP_NAME}-ops.git main"
                 }
             }
         }
